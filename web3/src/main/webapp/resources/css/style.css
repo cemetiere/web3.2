@@ -1,0 +1,69 @@
+#header {
+    background-color: black;
+    color: white;
+    font-size: 41px;
+    font-weight: bold;
+    padding: 1.15%;
+    margin: -0.51% -0.51% 0 -0.51%;
+}
+canvas{
+    background-color: rgb(210 210 210 / 88%);
+    border-radius:20px;
+
+}
+
+#variant {
+    float: right;
+}
+#clock{
+    font-size: 100px;
+    text-align: center;
+}
+.panel{
+    background-color: rgb(41 41 41 / 88%);
+    margin:auto;
+    text-align: center;
+    padding:20px;
+}
+#form{
+    width: 500px;
+    text-align: center;
+    margin:auto;
+    background-color:#c1c1c1 ;
+    border-radius:10%
+}
+#formWrapper{
+    margin-left: auto;
+    margin-right: auto;
+    background-color:rgb(41 41 41 / 88%) ;
+
+}
+.row{
+    padding:1%;
+}
+table{
+    width:100%;
+    background-color:rgb(41 41 41 / 88%);
+
+
+}
+th{
+    background-color:#b9b7b7;
+
+}
+th, td {
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align:center;
+
+}
+td{
+    background-color:rgb(255 255 255 / 88%);
+}
+a, a:visited {
+    text-align: center;
+    color: white;
+    font-weight: lighter;
+    text-decoration-line: none;
+    margin-left: 18.3%;
+}

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="js" name="graph.js" target="body"/>
+        <ui:composition template="templates/header.xhtml">
+            <ui:define name="script">
+                <h:outputScript library="js" name="graph.js" target="body"/>
+            </ui:define>
+            <ui:define name="link">
+                <h:link value="Start page" outcome="index"/>
+            </ui:define>
+            <ui:define name="content">
+                <div class="panel">
+                    <canvas id="graph" width="300" height="300">graph</canvas>
+                </div>
+                    <div id = "formWrapper">
+                        <h:form id="form">
+
+                            <!-- R field-->
+                            <div class="row">
+                                <h:outputLabel for="r">R</h:outputLabel>
+                                <div class="row-fill">
+                                    <h:inputHidden id="r" value="#{point.r}" pt:placeholder="1"/>
+                                    <p><h:outputText id="r-display" value="1" /></p>
+                                    <p:slider for="r" id="rSlider" display="r-display" minValue="1" maxValue="4" step="0.25">
+                                        <f:ajax event="slideEnd"  render="graph" onevent="drawPoints"/>
+                                    </p:slider>
+                                </div>
+
+                                <p><h:message id="r-warning" styleClass="warning" for="r"/></p>
+                            </div>
+
+
+                            <!-- Y field-->
+                            <div class="row">
+                                <h:outputLabel value="Y value: "/>
+                                <h:inputText id="y" value="#{point.y}" pt:placeholder="0" maxlength="10" validatorMessage="Y should be a float from -3 to 3">
+                                    <f:validateRequired/>
+                                    <f:validateDoubleRange minimum="-3" maximum="3"/>
+                                    <f:ajax event="keyup" render="y-warning" execute="y"/>
+
+                                </h:inputText>
+                                <p><h:message id="y-warning" styleClass="warning" for="y"/></p>
+                            </div>
+
+                            <!-- X field-->
+                            <div class="row">
+                                <br/>
+                                <h:outputLabel value="X value:"/>
+                                <br/>
+                                <h:selectOneRadio>
+                                    <f:selectItem itemLabel="-4" itemValue="-4"/>
+                                    <f:selectItem itemLabel="-3" itemValue="-3"/>
+                                    <f:selectItem itemLabel="-2" itemValue="-2"/>
+                                    <f:selectItem itemLabel="-1" itemValue="-1"/>
+                                    <f:selectItem itemLabel="0" itemValue="0"/>
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                    <f:selectItem itemLabel="4" itemValue="4"/>
+                                </h:selectOneRadio>
+                                <h:inputHidden id="x" value="#{point.x}">
+                                    <f:validateRequired/>
+                                    <f:validateLongRange minimum="-4" maximum="4"/>
+                                </h:inputHidden>
+                            </div>
+
+                            <!-- Submit button-->
+                            <div class="row" style="margin-bottom: 0">
+                                <h:commandButton id="submit" action="#{point.submit()}" value="Submit">
+                                    <f:ajax execute="form" render="table" onevent="drawPoints"/>
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                <div class="table">
+                    <h:panelGroup id="table">
+                        <h:dataTable styleClass="data-table" value="#{dBManager.results}" var="r">
+                            <h:column headerClass="coords-column">
+                                <f:facet name="header">X</f:facet>
+                                <h:outputText value="#{r.x}"/>
+                            </h:column>
+                            <h:column headerClass="coords-column">
+                                <f:facet name="header">Y</f:facet>
+                                <h:outputText value="#{r.y}"/>
+                            </h:column>
+                            <h:column headerClass="coords-column">
+                                <f:facet name="header">R</f:facet>
+                                <h:outputText value="#{r.r}"/>
+                            </h:column>
+                            <h:column headerClass="time-column">
+                                <f:facet name="header">Current time</f:facet>
+                                <h:outputText value="#{r.currentTime}"/>
+                            </h:column>
+                            <h:column headerClass="time-column">
+                                <f:facet name="header">Execution time</f:facet>
+                                <h:outputText value="#{r.executionTime}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Hit fact</f:facet>
+                                <h:outputText value="#{r.hitFact}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+</html>
